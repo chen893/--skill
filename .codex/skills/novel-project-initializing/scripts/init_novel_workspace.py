@@ -82,6 +82,50 @@ def maybe_apply_novel_title(config_path: Path, novel_name: str) -> None:
     config_path.write_text("".join(out), encoding="utf-8")
 
 
+def copy_codex_skills(root: Path, novel_dir: Path, force: bool) -> str:
+    """
+    将项目根目录下的 `.codex/skills` 复制到工作区目录，保证工作区可“自包含”。
+
+    约定：
+    - 源目录不存在则跳过
+    - 目标已存在且未开启 --force 则跳过
+    - 开启 --force 时先删除目标再复制
+    """
+
+    src = root / ".codex" / "skills"
+    if not src.exists():
+        return "missing"
+    if not src.is_dir():
+        return "missing"
+
+    dst = novel_dir / ".codex" / "skills"
+
+    src_resolved = src.resolve()
+    dst_resolved = dst.resolve()
+
+    if src_resolved == dst_resolved:
+        return "skipped_same"
+
+    try:
+        dst_resolved.relative_to(src_resolved)
+        return "skipped_recursive"
+    except ValueError:
+        pass
+
+    if dst.exists():
+        if not force:
+            return "skipped_exists"
+        shutil.rmtree(dst)
+
+    ensure_dir(dst.parent)
+    shutil.copytree(
+        src,
+        dst,
+        ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".pytest_cache", ".DS_Store"),
+    )
+    return "copied"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="初始化小说工作区目录与基础模板文件")
     parser.add_argument("--root", default=".", help="项目根目录（默认：当前目录）")
@@ -153,6 +197,16 @@ def main() -> int:
 
     if novel_name and wrote.get("novel.yaml"):
         maybe_apply_novel_title(novel_dir / "config" / "novel.yaml", novel_name)
+
+    skills_status = copy_codex_skills(root, novel_dir, args.force)
+    if skills_status == "copied":
+        print(f"[OK] 已复制 .codex/skills → {novel_dir / '.codex' / 'skills'}")
+    elif skills_status == "missing":
+        print("[WARN] 未发现项目根目录下的 .codex/skills，已跳过复制")
+    elif skills_status == "skipped_exists":
+        print(f"[SKIP] {novel_dir / '.codex' / 'skills'} 已存在（可用 --force 重建）")
+    elif skills_status in {"skipped_same", "skipped_recursive"}:
+        print("[WARN] .codex/skills 复制目标路径异常，已跳过复制")
 
     print(f"[OK] 工作区已初始化：{novel_dir}")
     print("下一步建议：先写 bible（硬约束）→ 大纲 → 场景卡 → 写章闭环")

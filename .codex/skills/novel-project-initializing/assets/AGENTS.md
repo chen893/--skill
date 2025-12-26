@@ -1,6 +1,6 @@
 # 小说工作区：Codex 使用说明（skills 路由）
 
-本仓库用于管理一个或多个小说工作区：通常位于 `projects/<书名>/novel/`，每个工作区包含 `config/ bible/ outline/ draft/ summaries/ continuity/ decisions/ reports/ _data/`。请优先使用项目内提供的 `novel-*` skills（见仓库根目录 `.codex/skills/*/SKILL.md`）来完成任务，避免临时自创流程导致“吃书/漂移/难以回溯”。
+本目录为小说工作区根目录（WORKDIR）：包含 `config/ bible/ outline/ draft/ summaries/ continuity/ decisions/ reports/ _data/`。请优先使用本工作区内的 `novel-*` skills（见 `.codex/skills/*/SKILL.md`；如缺失再看仓库根目录同路径）来完成任务，避免临时自创流程导致“吃书/漂移/难以回溯”。
 
 提示：若本工作区目录名不是 `novel`，运行脚本时通常需要加 `--novel-dir <本目录名>`（例如 `novel-analytics` / `novel-indexing-and-searching`）。
 
