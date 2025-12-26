@@ -12,7 +12,7 @@ description: 索引与检索：为长篇生成可重建的本地索引（entitie
 
 ## 核心约定（让索引靠谱）
 
-- 关键实体使用稳定 ID：`char-*`/`loc-*`/`fac-*`/`item-*`/`sys-*`/`thr-*`/`evt-*`
+- 关键实体使用稳定 ID：`char-####`/`loc-####`/`fac-####`/`item-####`/`sys-####`/`thr-####`/`evt-####`（bible 文件名通常为 `char-####-姓名.md`/`loc-####-地点名.md` 等）
 - `open-threads.md` 与 `timeline.md` 尽量保持表格结构（便于解析）
 
 ## 最短路径工作流

@@ -1,6 +1,6 @@
 # 小说工作区：Codex 使用说明（skills 路由）
 
-本目录是小说工作区根目录（含 `config/ bible/ outline/ draft/ summaries/ continuity/ decisions/ reports/ _data/`）。请优先使用项目内提供的 `novel-*` skills（见仓库根目录 `.codex/skills/*/SKILL.md`）来完成任务，避免临时自创流程导致“吃书/漂移/难以回溯”。
+本仓库用于管理一个或多个小说工作区：通常位于 `projects/<书名>/novel/`，每个工作区包含 `config/ bible/ outline/ draft/ summaries/ continuity/ decisions/ reports/ _data/`。请优先使用项目内提供的 `novel-*` skills（见仓库根目录 `.codex/skills/*/SKILL.md`）来完成任务，避免临时自创流程导致“吃书/漂移/难以回溯”。
 
 提示：若本工作区目录名不是 `novel`，运行脚本时通常需要加 `--novel-dir <本目录名>`（例如 `novel-analytics` / `novel-indexing-and-searching`）。
 
@@ -36,6 +36,24 @@
 2. 本任务相关 `bible/**` 与 `outline/**`（尤其 scene-cards）
 3. 最近章节摘要 `summaries/chapters/*`
 4. 仅在需要引用原句/定位冲突时，才精准回读 `draft/chapters/*`
+
+## 多小说工作区选择（避免写错目录）
+
+当仓库内存在多个小说工作区（多个 `*/novel/`）时：
+
+- 若当前工作目录不在任何工作区内且存在多个候选，并且用户没有指定小说，我会询问一次“写哪本”，以免写错目录。
+
+## 一句命令闭环（减少反复沟通）
+
+当用户说“生成下一章/下一章/完成下一章”时，除非用户明确要求“只写正文”，默认执行可持续连载闭环：
+
+1. 轻量 rehydrate：读取 `summaries/state.md` + 目标章节 scene-cards + 本章涉及的 `bible/**`（只读，避免加载整书）。
+2. DoD 门禁：若发现上一章已写正文但缺少 `summaries/chapters/ch-XXX-summary.md` 或 `state.md` 未推进，先补齐摘要与状态，再写下一章。
+3. 若缺场景卡：先用 `novel-scene-planning` 生成最小可写 scene-cards（1~3 张）。
+4. 写正文：`draft/chapters/ch-XXX.md`（`novel-chapter-drafting`）。
+5. 写完立即闭环：`novel-summarizing` → `novel-thread-tracking`（必要时登记 `continuity/issues.md` / `decisions/decision-log.md`）。
+
+同一会话内如文件未变更，不重复整段重读；仅在检测到文件变更或跨会话重载时，才按上述最小集合 rehydrate。
 
 ## 不确定与变更登记
 

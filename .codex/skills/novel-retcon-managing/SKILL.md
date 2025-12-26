@@ -19,7 +19,7 @@ description: 设定变更/吃书回修管理（Retcon）：评估改动影响范
 
 1. 先登记决策：在 `decision-log.md` 写清楚“为何改/替代方案/影响范围/回修清单/状态”。
 2. 影响面定位：
-   - 优先用实体 ID（`char-*`/`loc-*`/`sys-*`/`thr-*`）与专名检索定位章节
+   - 优先用实体 ID（`char-####`/`loc-####`/`sys-####`/`thr-####`；对应文件名通常为 `char-####-姓名.md` 等）与专名检索定位章节
    - 先列章节范围，再决定是否回读原文
 3. 更新 canon：
    - 用 `novel-bible-managing` 更新 bible（权威事实）
@@ -36,4 +36,3 @@ description: 设定变更/吃书回修管理（Retcon）：评估改动影响范
 ## 模板
 
 如缺少 `decision-log.md`，复制 `assets/decision-log-template.md` 到 `novel/decisions/decision-log.md`。
-
