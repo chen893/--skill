@@ -10,7 +10,7 @@
 - 初始化/补齐工作区：`novel-project-initializing`
 - 写/续写/扩写一章：`novel-chapter-drafting`（若缺场景卡先 `novel-scene-planning`）
 - 写完一章的闭环：`novel-summarizing` → `novel-thread-tracking`（每 1~3 章可加 `novel-continuity-checking`）
-- 大纲/分卷/人物弧/节奏规划：`novel-outlining`
+- 大纲/分卷/人物弧/节奏规划：`novel-outlining`（建议每卷落地 `outline/volumes/vol-XX.md` + `outline/volumes/vol-XX-beat-sheet.md`）
 - 场景卡/拆章/分镜/章末钩子：`novel-scene-planning`
 - 设定/人物卡/地点/势力/物品/体系/风格指南：`novel-bible-managing`（名词统一补 `novel-naming-glossary-managing`）
 - 吃书/设定推翻/回修影响面评估与清单：`novel-retcon-managing`
@@ -57,6 +57,11 @@
 3. 若缺场景卡：先用 `novel-scene-planning` 生成最小可写 scene-cards（1~3 张）。
 4. 写正文：`draft/chapters/ch-XXX.md`（`novel-chapter-drafting`）。
 5. 写完立即闭环：`novel-summarizing` → `novel-thread-tracking`（必要时登记 `continuity/issues.md` / `decisions/decision-log.md`）。
+
+卷末额外建议（强烈推荐）：
+
+1. 生成 `summaries/volumes/vol-XX-summary.md`（可改成“上卷回顾”发布用）。
+2. 跑一次 `novel-continuity-checking`（范围：本卷），把 P0 收敛到 0。
 
 同一会话内如文件未变更，不重复整段重读；仅在检测到文件变更或跨会话重载时，才按上述最小集合 rehydrate。
 

@@ -39,10 +39,11 @@ description: 长篇小说多 Skill 总控与路由：把用户需求拆解为写
 
 - 写/续写/扩写章节 → `novel-chapter-drafting`（必要时先 `novel-scene-planning`）
 - 总结/回顾/梳理进度 → `novel-summarizing`（更新 chapter summary + state）
+- 卷末复盘/上卷回顾 → `novel-summarizing`（输出 `summaries/volumes/vol-XX-summary.md`）
 - 伏笔/线索/承诺/回收安排 → `novel-thread-tracking`
 - 时间线/设定一致性/逻辑查错 → `novel-continuity-checking`
 - 人物卡/世界观/名词表/风格指南 → `novel-bible-managing`（重大改动同步 decision log）
-- 大纲/分卷/人物弧/节奏规划 → `novel-outlining`
+- 大纲/分卷/人物弧/节奏规划（含卷规划/卷节拍表）→ `novel-outlining`
 - 改稿/润色/结构大修 → `novel-editing`（大改后跑 continuity + summaries 闭环）
 - 吃书/推翻设定/回修影响面 → `novel-retcon-managing`
 - 快速定位“某事在哪章哪段” → `novel-indexing-and-searching`（先检索后打开文件）
@@ -66,6 +67,15 @@ description: 长篇小说多 Skill 总控与路由：把用户需求拆解为写
 - 门禁：正文不出现任何索引 ID（`char-`/`loc-`/`fac-`/`item-`/`sys-`/`thr-`/`evt-`/`scn-`）与“系统提示括号文本”（如 `【提示：...】`）
 - 如发现冲突/不确定：更新 `continuity/issues.md`
 - 如引入新设定：走 `novel-bible-managing`，并在必要时登记 `decisions/decision-log.md`
+
+## 每卷 DoD（卷闭环，写完就做）
+
+- 必须存在/更新：
+  - `outline/volumes/vol-XX.md`（卷规划；至少包含：卷目标/卷代价/卷终局/卷末钩子/回报计划）
+  - `outline/volumes/vol-XX-beat-sheet.md`（卷节拍表；拆到章级执行）
+  - `summaries/volumes/vol-XX-summary.md`（卷摘要；可改为“上卷回顾”发布用）
+  - `continuity/open-threads.md`（把本卷开坑/填坑对账清楚，补齐 `预计回收卷/回收卷`）
+- 门禁：本卷 P0 连续性问题收敛到 0（建议跑一次 `novel-continuity-checking`，范围=本卷）
 
 ## 约束
 

@@ -21,6 +21,7 @@ description: 生成分层摘要并维护 state：为章节输出 ch-XXX-summary.
 
 - `summaries/chapters/ch-XXX-summary.md`
 - `summaries/state.md`
+- 卷末（如适用）：`summaries/volumes/vol-XX-summary.md`
 
 ## 最短路径工作流
 
@@ -28,10 +29,12 @@ description: 生成分层摘要并维护 state：为章节输出 ch-XXX-summary.
 2. 提取人物状态变化（用人物 ID 标注，避免同名混乱；人物 ID 使用 `char-中文名`，不要用拼音）。
 3. 记录新增/更新设定（只写“发生了什么变化”，细节落 bible）。
 4. 列出 `threads_open` / `threads_close`（与 open-threads 表格对账）。
-5. 更新 `state.md`：推进章节范围、时间线、地点、POV、主线现状与近期目标。
+5. 更新 `state.md`：推进章节范围、当前卷、时间线、地点、POV、主线现状与近期目标。
+6. 若本章是卷末/你想做卷间衔接：生成 `summaries/volumes/vol-XX-summary.md`（可直接改造成“上卷回顾”发布用）。
 
 ## 模板
 
 可复制：
 - `assets/chapter-summary-template.md`
 - `assets/state-template.md`
+- `assets/volume-summary-template.md`（卷末复盘/卷间衔接）

@@ -98,16 +98,11 @@ def copy_codex_skills(root: Path, novel_dir: Path, force: bool) -> str:
             return primary
 
         # 兜底：从“本脚本所在仓库”的 .codex/skills 复制（用户可能在子目录里执行 --root）
-        # init_novel_workspace.py
-        # └─ scripts/
-        #    └─ novel-project-initializing/
-        #       └─ skills/
-        #          └─ .codex/
-        #             └─ <repo root>
-        repo_root = Path(__file__).resolve().parents[5]
-        fallback = repo_root / ".codex" / "skills"
-        if fallback.exists() and fallback.is_dir():
-            return fallback
+        script_path = Path(__file__).resolve()
+        for parent in script_path.parents:
+            fallback = parent / ".codex" / "skills"
+            if fallback.exists() and fallback.is_dir():
+                return fallback
 
         return None
 
@@ -191,6 +186,7 @@ def main() -> int:
         novel_dir / "bible" / "items",
         novel_dir / "bible" / "systems",
         novel_dir / "outline" / "arcs",
+        novel_dir / "outline" / "volumes",
         novel_dir / "outline" / "scene-cards",
         novel_dir / "draft" / "chapters",
         novel_dir / "summaries" / "chapters",
@@ -200,6 +196,8 @@ def main() -> int:
         novel_dir / "research" / "sources",
         novel_dir / "reports" / "continuity",
         novel_dir / "reports" / "editing",
+        novel_dir / "reports" / "release",
+        novel_dir / "reports" / "analytics",
         novel_dir / "_data",
     ]
 
