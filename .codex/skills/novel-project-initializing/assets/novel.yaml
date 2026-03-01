@@ -16,7 +16,11 @@ tone: "偏爽 / 偏燃 / 偏虐 / 偏日常（自填）"
 # 连载目标
 target_word_count: 800000
 update_schedule: "日更/隔日/周更（自填）"
-chapter_length_target: "3000~5000（自填）"
+
+# 章节长度（建议用“粗略字符数，不含空白”作为统计口径）
+chapter_length_min: 3000
+chapter_length_max: 5000
+chapter_length_target: 4000
 
 # 结构规划（可粗略）
 volumes:
@@ -27,4 +31,3 @@ volumes:
 taboos:
   - "未成年人相关敏感内容"
   - "现实涉政敏感"
-

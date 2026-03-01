@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-初始化 long-form 小说工作区（默认目录名为 `novel`，也可改为小说名）。
+初始化 long-form 小说工作区（默认目录名为小说名；也可用 --novel-dir 指定；支持就地初始化）。
 
 设计目标：
 - 标准化目录结构与关键文件落盘位置
@@ -84,7 +84,7 @@ def maybe_apply_novel_title(config_path: Path, novel_name: str) -> None:
 
 def copy_codex_skills(root: Path, novel_dir: Path, force: bool) -> str:
     """
-    将项目根目录下的 `.codex/skills` 复制到工作区目录，保证工作区可“自包含”。
+    将 `.codex/skills` 复制到工作区目录，保证工作区可“自包含”。
 
     约定：
     - 源目录不存在则跳过
@@ -92,10 +92,27 @@ def copy_codex_skills(root: Path, novel_dir: Path, force: bool) -> str:
     - 开启 --force 时先删除目标再复制
     """
 
-    src = root / ".codex" / "skills"
-    if not src.exists():
-        return "missing"
-    if not src.is_dir():
+    def pick_src() -> Path | None:
+        primary = root / ".codex" / "skills"
+        if primary.exists() and primary.is_dir():
+            return primary
+
+        # 兜底：从“本脚本所在仓库”的 .codex/skills 复制（用户可能在子目录里执行 --root）
+        # init_novel_workspace.py
+        # └─ scripts/
+        #    └─ novel-project-initializing/
+        #       └─ skills/
+        #          └─ .codex/
+        #             └─ <repo root>
+        repo_root = Path(__file__).resolve().parents[5]
+        fallback = repo_root / ".codex" / "skills"
+        if fallback.exists() and fallback.is_dir():
+            return fallback
+
+        return None
+
+    src = pick_src()
+    if src is None:
         return "missing"
 
     dst = novel_dir / ".codex" / "skills"
@@ -129,7 +146,11 @@ def copy_codex_skills(root: Path, novel_dir: Path, force: bool) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description="初始化小说工作区目录与基础模板文件")
     parser.add_argument("--root", default=".", help="项目根目录（默认：当前目录）")
-    parser.add_argument("--novel-dir", default=None, help="工作区目录名（默认：novel；建议填小说名）")
+    parser.add_argument(
+        "--novel-dir",
+        default=None,
+        help="工作区目录名或相对路径（不填时默认用 --novel-name；填 . 表示直接在 --root 下初始化）",
+    )
     parser.add_argument("--novel-name", default=None, help="小说名（用于生成目录名并写入 config/novel.yaml 的 title）")
     parser.add_argument("--force", action="store_true", help="覆盖已存在的模板文件（谨慎使用）")
     args = parser.parse_args()
@@ -137,18 +158,30 @@ def main() -> int:
     root = Path(args.root).resolve()
     novel_name = str(args.novel_name).strip() if args.novel_name else None
 
-    novel_dir_name = args.novel_dir
+    novel_dir_name = args.novel_dir.strip() if isinstance(args.novel_dir, str) else args.novel_dir
     if novel_dir_name is None and novel_name:
-        novel_dir_name = sanitize_dir_name(novel_name)
+        candidate = sanitize_dir_name(novel_name)
+        novel_dir_name = "." if root.name == candidate else candidate
 
     if novel_dir_name is None and sys.stdin.isatty() and sys.stdout.isatty():
-        user_input = input("小说工作区目录名（默认：novel；建议填小说名）：").strip()
-        if user_input:
+        prompt = "小说工作区目录名或相对路径（建议填小说名；输入 . 表示在 root 下初始化）："
+        user_input = input(prompt).strip()
+        if user_input in {".", "./", ".\\"}:
+            novel_dir_name = "."
+        elif user_input:
             novel_dir_name = sanitize_dir_name(user_input)
             novel_name = novel_name or user_input
+        elif novel_name:
+            candidate = sanitize_dir_name(novel_name)
+            novel_dir_name = "." if root.name == candidate else candidate
 
-    novel_dir_name = novel_dir_name or "novel"
-    novel_dir = root / novel_dir_name
+    if novel_dir_name is None:
+        raise ValueError("请至少提供 --novel-name 或 --novel-dir（例如：--root projects --novel-name \"书名\"）")
+
+    if novel_dir_name in {".", "./", ".\\"}:
+        novel_dir = root
+    else:
+        novel_dir = root / novel_dir_name
 
     dirs_to_create = [
         novel_dir / "config",

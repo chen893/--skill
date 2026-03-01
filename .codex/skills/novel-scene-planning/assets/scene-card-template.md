@@ -2,8 +2,8 @@
 id: scn-0001
 chapter: ch-001
 time: D+3 21:00
-location: loc-old-town
-pov: char-lin-yu
+location: loc-地点名
+pov: char-角色名
 threads_open: [thr-0007]
 threads_close: []
 ---
@@ -27,4 +27,3 @@ threads_close: []
 
 ## 本章爽点/章末钩子（可选）
 - ...
-

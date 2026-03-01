@@ -12,7 +12,10 @@ description: 索引与检索：为长篇生成可重建的本地索引（entitie
 
 ## 核心约定（让索引靠谱）
 
-- 关键实体使用稳定 ID：`char-####`/`loc-####`/`fac-####`/`item-####`/`sys-####`/`thr-####`/`evt-####`（bible 文件名通常为 `char-####-姓名.md`/`loc-####-地点名.md` 等）
+- 关键实体使用稳定 ID（禁止用拼音做 ID）：
+  - 实体：`char-中文名`/`loc-中文名`/`fac-中文名`/`item-中文名`/`sys-中文名`
+  - 线索/事件：`thr-####`/`evt-####`
+  - bible 文件名通常为：`char-林瑶.md`/`loc-旧镇.md`/`fac-青竹会.md` 等
 - `open-threads.md` 与 `timeline.md` 尽量保持表格结构（便于解析）
 
 ## 最短路径工作流

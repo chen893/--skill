@@ -1,8 +1,8 @@
 # 小说工作区：Codex 使用说明（skills 路由）
 
-本目录为小说工作区根目录（WORKDIR）：包含 `config/ bible/ outline/ draft/ summaries/ continuity/ decisions/ reports/ _data/`。请优先使用本工作区内的 `novel-*` skills（见 `.codex/skills/*/SKILL.md`；如缺失再看仓库根目录同路径）来完成任务，避免临时自创流程导致“吃书/漂移/难以回溯”。
+本目录为小说工作区根目录（WORKDIR）：包含 `config/ bible/ outline/ draft/ summaries/ continuity/ decisions/ reports/ _data/`。请优先使用 skills 来完成任务，避免临时自创流程导致“吃书/漂移/难以回溯”。
 
-提示：若本工作区目录名不是 `novel`，运行脚本时通常需要加 `--novel-dir <本目录名>`（例如 `novel-analytics` / `novel-indexing-and-searching`）。
+提示：本目录就是工作区根目录（`小说名/...`）。如果你从仓库根目录运行脚本，通常需要通过 `--novel-dir` 指向本目录；如果你在本目录内运行脚本，通常用 `--novel-dir .`。
 
 ## 什么时候调用哪个 skill（意图 → skill）
 
@@ -37,9 +37,14 @@
 3. 最近章节摘要 `summaries/chapters/*`
 4. 仅在需要引用原句/定位冲突时，才精准回读 `draft/chapters/*`
 
+## ID 约定（避免拼音污染）
+
+- 实体 ID 用“前缀 + 中文主名”：`char-林瑶` / `loc-旧镇` / `fac-青竹会` / `item-青铜钥` / `sys-灵力体系`（禁止用拼音做 ID）。
+- 线索 ID 保持 `thr-####` 数字（仅用于摘要/线索表/场景卡的元信息，不写进正文）。
+
 ## 多小说工作区选择（避免写错目录）
 
-当仓库内存在多个小说工作区（多个 `*/novel/`）时：
+当仓库内存在多个小说工作区（多个小说目录）时：
 
 - 若当前工作目录不在任何工作区内且存在多个候选，并且用户没有指定小说，我会询问一次“写哪本”，以免写错目录。
 

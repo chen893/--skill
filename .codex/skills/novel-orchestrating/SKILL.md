@@ -14,26 +14,26 @@ description: 长篇小说多 Skill 总控与路由：把用户需求拆解为写
 
 ### 权威优先级（防止多真相源漂移）
 
-- `novel/bible/**`、`novel/continuity/**`：权威事实（canon）
-- `novel/decisions/decision-log.md`：变更裁决（why）
-- `novel/outline/**`：计划与意图（plan）
-- `novel/summaries/**`、`novel/_data/**`：派生缓存（可重建）
-- `novel/draft/**`：叙事正文（可改稿，但不是权威存储）
+- `bible/**`、`continuity/**`：权威事实（canon）
+- `decisions/decision-log.md`：变更裁决（why）
+- `outline/**`：计划与意图（plan）
+- `summaries/**`、`_data/**`：派生缓存（可重建）
+- `draft/**`：叙事正文（可改稿，但不是权威存储）
 
 冲突处理优先级：`bible > continuity > decisions > outline > summaries > draft`
 
 ### 默认上下文读取顺序（先小后大）
 
-1. `novel/summaries/state.md`
-2. 本任务相关的 `novel/bible/**` 与 `novel/outline/**`（尤其 scene-cards）
-3. 最近章节摘要 `novel/summaries/chapters/*`
-4. 仅在需要引用原句/定位冲突时，才精准回读 `novel/draft/chapters/*`
+1. `summaries/state.md`
+2. 本任务相关的 `bible/**` 与 `outline/**`（尤其 scene-cards）
+3. 最近章节摘要 `summaries/chapters/*`
+4. 仅在需要引用原句/定位冲突时，才精准回读 `draft/chapters/*`
 
 ### 不确定处理（避免“编造事实”）
 
 - 缺关键设定时：先问 1~3 个最小澄清问题。
-- 用户拒绝澄清时：只做 1 个保守默认，并登记到 `novel/decisions/decision-log.md`（标注影响范围与回修计划）。
-- 任何冲突：写入 `novel/continuity/issues.md`，不要悄悄改 canon 来迎合正文。
+- 用户拒绝澄清时：只做 1 个保守默认，并登记到 `decisions/decision-log.md`（标注影响范围与回修计划）。
+- 任何冲突：写入 `continuity/issues.md`，不要悄悄改 canon 来迎合正文。
 
 ## 路由规则（用户意图 → 调用哪个 Skill）
 
@@ -59,12 +59,13 @@ description: 长篇小说多 Skill 总控与路由：把用户需求拆解为写
 ## 每章 DoD（最小闭环，写完就做）
 
 - 必须存在/更新：
-  - `novel/draft/chapters/ch-XXX.md`
-  - `novel/summaries/chapters/ch-XXX-summary.md`
-  - `novel/summaries/state.md`
-  - `novel/continuity/open-threads.md`（新增/回收线索对账）
-- 如发现冲突/不确定：更新 `novel/continuity/issues.md`
-- 如引入新设定：走 `novel-bible-managing`，并在必要时登记 `decision-log.md`
+  - `draft/chapters/ch-XXX.md`
+  - `summaries/chapters/ch-XXX-summary.md`
+  - `summaries/state.md`
+  - `continuity/open-threads.md`（新增/回收线索对账）
+- 门禁：正文不出现任何索引 ID（`char-`/`loc-`/`fac-`/`item-`/`sys-`/`thr-`/`evt-`/`scn-`）与“系统提示括号文本”（如 `【提示：...】`）
+- 如发现冲突/不确定：更新 `continuity/issues.md`
+- 如引入新设定：走 `novel-bible-managing`，并在必要时登记 `decisions/decision-log.md`
 
 ## 约束
 
